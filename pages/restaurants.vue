@@ -4,7 +4,7 @@
         <div class="restaurantheading p-4 bg-info">
             <h1 class="text-light display-4">Restaurants </h1>
             <app-select @change="selectedRestaurant =$event" ></app-select>
-            <!-- <pre>{{$data}} </pre> -->
+            <pre>{{selectedRestaurant}} </pre>
         </div>
         <app-restaurant-info :datasource="filteredRestaurants"></app-restaurant-info>
         <app-footer ></app-footer>
@@ -33,12 +33,17 @@ export default {
     computed:{
         ...mapState(['fooddata']),
         filteredRestaurants(){
+             if(this.selectedRestaurant=='all'){
+                return this.fooddata
+            }
             if(this.selectedRestaurant){
                 return this.fooddata.filter(el=>{
                     return el.name.toLowerCase().includes(this.selectedRestaurant)
                 });
             }
+            
             return this.fooddata;
+           
         }
     }
 }
